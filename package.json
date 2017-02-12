@@ -1,0 +1,44 @@
+{
+  "name": "jquery-tinytimer",
+  "version": "0.0.0",
+  "description": "simple timer plugin for jQuery",
+  "main": "jquery.tinytimer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/narduz86/jquery-tinytimer.git"
+  },
+  "keywords": [
+    "jquery",
+    "timer",
+    "tinytimer",
+    "jquery-plugin"
+  ],
+  "author": "narduz86",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/narduz86/jquery-tinytimer/issues"
+  },
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-concat": "~1.0.1",
+    "jscs": "~3.0.7",
+    "grunt-jscs": "~3.0.1",
+    "grunt-contrib-uglify": "~2.1.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "jquery": "~3.1.1",
+    "karma": "~1.4.1",
+    "qunit": "~0.9.1",
+    "qunitjs": "~2.1.1",
+    "karma-qunit": "~1.2.1",
+    "karma-chrome-launcher": "~2.0.0",
+    "karma-firefox-launcher": "~1.0.0",
+    "karma-safari-launcher": "~1.0.0",
+    "karma-opera-launcher": "~1.0.0",
+    "karma-ie-launcher": "~1.0.0",
+    "karma-phantomjs-launcher": "~1.0.2"
+  }
+}

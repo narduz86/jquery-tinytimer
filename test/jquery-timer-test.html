@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>jQuery Timer Plugin Test Page</title>
+	<style type="text/css">
+		.jt-container{
+			width: 250px;
+			float:left;
+			margin-right: 10px;
+		}
+
+		.jt-counter, .jt-target, .jt-history{
+			display:block;
+			width: 100%;
+			height: 50px;
+			border: 1px solid black;
+			overflow:
+		}
+
+		.jt-history{
+			height: 250px;
+		}
+
+    </style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../src/jquery.tinytimer.js"></script>
+	<script>
+	/* test javascript */
+	var idText = "jt-t";
+	var i = 1;
+
+	function instantiateTimer(id, options){
+
+		// create html
+		$("#jtc-stub").clone().attr("id", id).appendTo("body");
+
+		// instantiate timer
+		var t = $("#"+id+">.jt-counter").timer($.extend( {}, options ));
+
+		// buttons
+		$("#"+id+">.jt-start").click(function(event){
+			t.start();
+		});
+		$("#"+id+">.jt-stop").click(function(event){
+			t.stop();
+		});
+		$("#"+id+">.jt-reset").click(function(event){
+			t.zero();
+		});
+		$("#"+id+">.jt-print-history").click(function(event){
+			$("#"+id+">.jt-history").text(JSON.stringify(t.history));
+		});
+		$("#"+id+">.jt-duplicate").click(function(event){
+			instantiateTimer(idText+(i++), t.serialize());
+		});
+		$("#"+id+">.jt-destroy").click(function(event){
+			t.destroy();
+		});
+		$("#"+id+">.jt-delete").click(function(event){
+			t.destroy();
+			$("#"+id).remove();
+		});
+		$("#"+id+">.jt-stringify").click(function(event){
+			$("#"+id+">.jt-history").text(JSON.stringify(t.serialize()));
+		});
+		$("#"+id+">.jt-add").click(function(event){
+			$("#"+id+">.jt-counter").timer().counter += 1000;
+		});
+
+	}
+	$().ready(function(){
+		instantiateTimer(idText+(i++), {refreshInterval:1000});
+
+		//$("#jt-t1>.jt-counter").timer().counter = 1000*60*60*100 - 5000;
+	});
+	</script>
+</head>
+
+<body>
+
+	<div style="display: none;">
+		<div class="jt-container" id="jtc-stub">
+			<div class="jt-counter">Counter!</div>
+			<button class="jt-start">Start</button>
+			<button class="jt-stop">Stop</button>
+			<button class="jt-reset">Reset</button>
+
+			<button class="jt-print-history">Print history</button>
+			<button class="jt-duplicate">Duplicate</button>
+			<button class="jt-delete">Delete</button>
+			<button class="jt-destroy">Destroy</button>
+			<button class="jt-add">+1000</button>
+			<button class="jt-stringify">Stringify</button>
+
+			<textarea class="jt-history"></textarea>
+
+		</div>
+	</div>
+</body>

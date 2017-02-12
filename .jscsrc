@@ -1,0 +1,6 @@
+{
+  "preset": "jquery",
+  "requireCapitalizedComments": false,
+  "requireCurlyBraces": false,
+  "excludeFiles": [ "node_modules" ]
+}
