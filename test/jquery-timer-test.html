@@ -53,7 +53,7 @@
 			$("#"+id+">.jt-history").text(JSON.stringify(t.history));
 		});
 		$("#"+id+">.jt-duplicate").click(function(event){
-			instantiateTimer(idText+(i++), t.serialize());
+			instantiateTimer(idText+(i++), t.settings);
 		});
 		$("#"+id+">.jt-destroy").click(function(event){
 			t.destroy();
@@ -63,7 +63,7 @@
 			$("#"+id).remove();
 		});
 		$("#"+id+">.jt-stringify").click(function(event){
-			$("#"+id+">.jt-history").text(JSON.stringify(t.serialize()));
+			$("#"+id+">.jt-history").text(JSON.stringify(t.settings));
 		});
 		$("#"+id+">.jt-add").click(function(event){
 			$("#"+id+">.jt-counter").timer().counter += 1000;

@@ -79,6 +79,11 @@
 			get: function() { return _op.timerTarget; }
 		} );
 
+		// getter for settings
+		Object.defineProperty( this, "settings", {
+			get: function() { $.extend( true, {}, _op ); }
+		} );
+
 		/**********************************************
 		 *           	PUBLIC FUNCTIONS
 		 **********************************************/
@@ -138,20 +143,12 @@
 		/**
 		 * return an object describing timer options.
 		 * Those options can be used to re-create the timer.
-		 */
-		this.serialize = function() {
-			return $.extend( true, {}, _op );
-		};
-
-		/**
-		 * return an object describing timer options.
-		 * Those options can be used to re-create the timer.
+		 * TODO: how to ensure that an instance of the object previously saved does not continue to handle the timer??
 		 */
 		this.destroy = function() {
 			this.removeData( pluginName );
 			this.stop();
 			this.html( _existingContent );
-
 		};
 
 		/**********************************************
