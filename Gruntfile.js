@@ -55,21 +55,14 @@ module.exports = function( grunt ) {
 		},
 
 		// karma test runner
-		/*karma: {
+		karma: {
 			unit: {
 				configFile: "karma.conf.js",
-				background: true,
+				background: false,
 				singleRun: false,
-				browsers: [ "PhantomJS", "Firefox" ]
-			},
-
-			//continuous integration mode: run tests once in PhantomJS browser.
-			travis: {
-				configFile: "karma.conf.js",
-				singleRun: true,
-				browsers: [ "PhantomJS" ]
+				browsers: []
 			}
-		},*/
+		},
 
 		// watch for changes to source
 		// Better than calling grunt a million times
@@ -90,9 +83,8 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-contrib-watch" );
 	grunt.loadNpmTasks( "grunt-karma" );
 
-	// TODO grunt.registerTask( "travis", [ "jshint", "karma:travis" ] );
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify" ] );
-	// grunt.registerTask( "default", [ "jshint", "build", "karma:unit:run" ] );
-	grunt.registerTask( "default", [ "jshint", "build" ] );
+	grunt.registerTask( "default", [ "lint", "build", "karma:unit" ] );
+	// grunt.registerTask( "default", [ "jshint", "build" ] );
 };

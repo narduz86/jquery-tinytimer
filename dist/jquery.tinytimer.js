@@ -1,3 +1,11 @@
+/*
+ *  jquery-tinytimer - v0.0.0
+ *  simple timer plugin for jQuery
+ *  https://github.com/narduz86/jquery-tinytimer.git
+ *
+ *  Made by narduz86
+ *  Under MIT License
+ */
 // heading semi colon to clear previous scripts
 ;( function( $ ) {
 
