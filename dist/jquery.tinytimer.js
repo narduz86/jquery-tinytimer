@@ -14,6 +14,10 @@
 
     $.fn.timer = function( options ) {
 
+		// execute on first element only
+		if ( this.length > 1 )
+			return this.first().timer();
+
 		// plugin already constructed, return this element
 		if ( this.data( pluginName ) ) {
 			return this.data( pluginName );

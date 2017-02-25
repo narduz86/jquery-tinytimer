@@ -143,3 +143,27 @@ dupDiv.appendTo("body");
 // this timer will start right after its creation
 var dupTimer = dupDiv.timer(savedTimer);
 ```
+## Timer usage
+After instantiating a timer, you can do the following:
+- start timer
+- stop timer
+- reset counter value to zero
+
+Here follows a code example:
+```
+// instantiate two timers
+var $timer = $("#my-div").timer(); // this will be accesses through a variable\
+$("#my-div2").timer(); // this will be accessed directly
+
+// starts ticking
+$timer.start();
+$("#my-div2").timer().start();
+
+// stops ticking
+$timer.stop();
+$("#my-div2").timer().stop();
+
+// reset counter value
+$timer.zero();
+$("#my-div2").timer().reset();
+```
