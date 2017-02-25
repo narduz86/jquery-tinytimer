@@ -4,7 +4,7 @@
   "description": "simple timer plugin for jQuery",
   "main": "jquery.tinytimer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",
