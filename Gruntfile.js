@@ -56,11 +56,17 @@ module.exports = function( grunt ) {
 
 		// karma test runner
 		karma: {
-			unit: {
+			local: {
 				configFile: "karma.conf.js",
 				background: false,
 				singleRun: false,
 				browsers: []
+			},
+			travis: {
+				configFile: "karma.conf.js",
+				background: false,
+				singleRun: false,
+				browsers: ["Chrome", "Firefox", "Safari", "Opera", "Internet Explorer", "Edge"]
 			}
 		},
 
@@ -85,6 +91,7 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify" ] );
-	grunt.registerTask( "default", [ "lint", "build", "karma:unit" ] );
+	grunt.registerTask( "default", [ "lint", "build", "karma:local" ] );
+	grunt.registerTask( "travis", [ "lint", "build", "karma:travis" ] );
 	// grunt.registerTask( "default", [ "jshint", "build" ] );
 };

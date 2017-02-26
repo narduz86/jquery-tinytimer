@@ -4,7 +4,7 @@
   "description": "simple timer plugin for jQuery",
   "main": "jquery.tinytimer.js",
   "scripts": {
-    "test": "grunt"
+    "test": "grunt travis"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     "karma-opera-launcher": "~1.0.0",
     "karma-ie-launcher": "~1.0.0",
     "karma-phantomjs-launcher": "~1.0.2",
-    "grunt-karma": "~2.0.0"
+    "grunt-karma": "~2.0.0",
+    "karma-edge-launcher": "~0.2.0"
   }
 }
