@@ -64,7 +64,6 @@ module.exports = function( grunt ) {
 			},
 			travis: {
 				configFile: "karma.conf.js",
-				background: false,
 				singleRun: false,
 				browsers: ["Chrome_travis_ci", "Firefox", "Opera"],
 				customLaunchers: {
@@ -98,6 +97,6 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "lint", [ "jshint", "jscs" ] );
 	grunt.registerTask( "build", [ "concat", "uglify" ] );
 	grunt.registerTask( "default", [ "lint", "build", "karma:local" ] );
-	grunt.registerTask( "travis", [ "lint", "build", "karma:travis:run" ] );
+	grunt.registerTask( "travis", [ "lint", "build", "karma:travis" ] );
 	// grunt.registerTask( "default", [ "jshint", "build" ] );
 };
