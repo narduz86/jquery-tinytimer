@@ -11,7 +11,6 @@
 	var $fixture2 = null;
 	$( "body" ).prepend( $testCanvas );
 
-
 	QUnit.module( "jQuery tinyTimer", {
 		beforeEach: function() {
 
@@ -67,78 +66,93 @@
 
 	} );
 
-	QUnit.test("Test timer instance", function(assert) {
+	QUnit.test( "Test timer instance", function( assert ) {
+
+		// measurement variables
+		var afterStart, beforeStop, beforeStart, afterStop;
 
 		// number of assertions
-		assert.expect( 13 );
+		assert.expect( 20 );
 
 		// instantiate timer
-		var t1 = $fixture.timer($.extend( {}, options ));
+		var t1 = $fixture.timer( $.extend( {}, options ) );
 
 		// check div content 00:00:00
-		assert.equal($fixture.html(), "00:00:00", "Div content at timer creation");
+		assert.equal( $fixture.html(), "00:00:00", "Div content at timer creation" );
 
 		// check start\stop
 		var done1 = assert.async();
+		beforeStart = Date.now();
 		t1.start();
-		setTimeout(function() {
-			t1.stop();
+		afterStart = Date.now();
 
-			// cannot be sure that it will run at 00:00:02
+		setTimeout( function() {
+			beforeStop = Date.now();
+			t1.stop();
+			afterStop = Date.now();
+
+			// html was updated
 			assert.notEqual( $fixture.html(), "00:00:00", "Start\Stop ok" );
 
-			// put an high max value to handle browser slowdown
-			assert.ok(t1.counter >= 2000 && t1.counter <= 10000, "Counter value restart ok" );
-			done1();
-		}, 2100);
+			// check that counter was updated (2 asserts here)
+			assertTimerRange( beforeStart, afterStart, beforeStop, afterStop, t1,
+								assert, "Start\Stop" );
 
-		// check history
-		var done2 = assert.async();
-		setTimeout(function() {
+			// check history size
 			assert.equal( t1.history.length, 1, "History length ok" );
-			done2();
-		}, 3000);
 
-		// check reset
-		var done3 = assert.async();
-		setTimeout(function() {
+			// check history interval start and stop ranges
+			assertHistoryRange( beforeStart, afterStart, beforeStop, afterStop, t1.history[ 0 ],
+								assert, "Start\Stop" );
+
+			// check reset
 			t1.zero();
+			assert.equal( t1.counter, 0, "Counter value after reset" );
 			assert.equal( $fixture.html(), "00:00:00", "Reset div ok" );
 			assert.equal( t1.history.length, 1, "History length after reset ok" );
-			done3();
-		}, 3500);
+
+			// check start\stop after reset
+			beforeStart = Date.now();
+			t1.start();
+			afterStart = Date.now();
+
+			done1();
+		}, 2100 );
 
 		// check start\stop after reset
-		var done4 = assert.async();
-		setTimeout(function() {
-			t1.start();
-			done4();
-		}, 3800);
-		var done5 = assert.async();
-		setTimeout(function() {
-			t1.stop();
-			// cannot be sure that it will run at 00:00:01
-			assert.notEqual( $fixture.html(), "00:00:00", "Start\Stop after reset ok" );
-			assert.equal( t1.history.length, 2, "History length after restart ok" );
-			// put an high max value to handle browser slowdown
-			assert.ok(t1.counter >= 1000 && t1.counter <= 10000, "Counter value after restart ok" );
-			done5();
-		}, 5000);
+		var done2 = assert.async();
+		setTimeout( function() {
 
-		// check overriding counter value
-		var done6 = assert.async();
-		setTimeout(function() {
+			beforeStop = Date.now();
+			t1.stop();
+			afterStop = Date.now();
+
+			// html was updated
+			assert.notEqual( $fixture.html(), "00:00:00", "Start\Stop after reset ok" );
+
+			// check that counter was updated (2 asserts here)
+			assertTimerRange( beforeStart, afterStart, beforeStop, afterStop, t1,
+								assert, "Reset" );
+
+			// check history
+			assert.equal( t1.history.length, 2, "History length after restart ok" );
+			assertHistoryRange( beforeStart, afterStart, beforeStop, afterStop, t1.history[ 1 ],
+								assert, "Reset" );
+
+			// check overriding counter value
 			t1.counter = 1000;
 			assert.equal( $fixture.html(), "00:00:01", "Manual counter div 1000 ok" );
-			assert.ok(t1.counter == 1000, "Manual counter value 1000 ok" );
+			assert.ok( t1.counter == 1000, "Manual counter value 1000 ok" );
 
+			// check overriding counter value with zero
 			t1.counter = 0;
 			assert.equal( $fixture.html(), "00:00:00", "Manual zero counter ok" );
-			assert.ok(t1.counter == 0, "Manual zero counter value ok" );
+			assert.ok( t1.counter == 0, "Manual zero counter value ok" );
 
-			done6();
-		}, 6000);
-	});
+			done2();
+		}, 4000 );
+
+	} );
 
 	QUnit.test( "duplicate timer and test two instances", function( assert ) {
 
@@ -146,18 +160,18 @@
 		assert.expect( 4 );
 
 		// instantiate timers
-		var t1 = $fixture.timer($.extend( {}, options ));
-		var t2 = $fixture2.timer(t1.settings);
+		var t1 = $fixture.timer( $.extend( {}, options ) );
+		var t2 = $fixture2.timer( t1.settings );
 
 		// check start\stop of 2 instances
 		var done1 = assert.async();
 		t1.start();
 
-		setTimeout(function() {
+		setTimeout( function() {
 			t2.start();
-		}, 2000);
+		}, 2000 );
 
-		setTimeout(function() {
+		setTimeout( function() {
 			assert.ok( t1.counter > t2.counter, "Concurrent timers working properly" );
 			t1.counter = 0;
 			assert.ok(
@@ -169,7 +183,41 @@
 			assert.notEqual( $fixture.html().trim(), "", "check that t1 was not destroyed" );
 			assert.equal( $fixture2.html().trim(), "", "check that t2 is deleted" );
 			done1();
-		}, 3000);
+		}, 3000 );
 	} );
+
+	/**
+	 * This function checks if timer counter value is between min and max values.
+	 */
+	function assertTimerRange( beforeStart, afterStart, beforeStop, afterStop, $timer,
+								assert, msgPrefix ) {
+		msgPrefix = msgPrefix + ". " || "";
+		var minValue = beforeStop - afterStart;
+		var maxValue = afterStop - beforeStart;
+
+		assert.ok( $timer.counter >= minValue,
+			msgPrefix + "Check counter greater than min value. Expected miminum: " +
+			minValue + ", found: " + $timer.counter );
+
+		assert.ok( $timer.counter <= maxValue,
+			msgPrefix + "Check counter less than max value. Expected maximum: " +
+			maxValue + ", found: " + $timer.counter );
+	}
+
+	/**
+	 * This function checks if history value is between min and max values.
+	 */
+	function assertHistoryRange( beforeStart, afterStart, beforeStop, afterStop, historyElement,
+								assert, msgPrefix ) {
+		msgPrefix = msgPrefix + ". " || "";
+
+		assert.ok( historyElement.start >= beforeStart && historyElement.start <= afterStart,
+					msgPrefix + "Check history start value. Expected bewteen " +
+					beforeStart + " and " + afterStart + ". Found: " + historyElement.start );
+
+		assert.ok( historyElement.stop >= beforeStop && historyElement.stop <= afterStop,
+					msgPrefix + "Check history stop value. Expected bewteen " +
+					beforeStop + " and " + afterStop + ". Found: " + historyElement.stop );
+	}
 
 }( jQuery, QUnit ) );

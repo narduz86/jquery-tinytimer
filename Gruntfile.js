@@ -66,7 +66,13 @@ module.exports = function( grunt ) {
 				configFile: "karma.conf.js",
 				background: false,
 				singleRun: false,
-				browsers: ["Chrome", "Firefox", "Safari", "Opera", "Internet Explorer", "Edge"]
+				browsers: ["Chrome_travis_ci", "Firefox", "Safari", "Opera", "IE", "Edge"],
+				customLaunchers: {
+					Chrome_travis_ci: {
+						base: 'Chrome',
+						flags: ['--no-sandbox']
+					}
+				}
 			}
 		},
 
