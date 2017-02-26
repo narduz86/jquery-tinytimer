@@ -64,7 +64,7 @@ module.exports = function( grunt ) {
 			},
 			travis: {
 				configFile: "karma.conf.js",
-				singleRun: false,
+				singleRun: true,
 				browsers: ["Chrome_travis_ci", "Firefox", "Opera"],
 				customLaunchers: {
 					Chrome_travis_ci: {

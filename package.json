@@ -4,7 +4,7 @@
   "description": "simple timer plugin for jQuery",
   "main": "jquery.tinytimer.js",
   "scripts": {
-    "test": "grunt travis"
+    "test": "npm run jscs && grunt travis --verbose"
   },
   "repository": {
     "type": "git",
