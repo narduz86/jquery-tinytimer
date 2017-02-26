@@ -8,6 +8,9 @@ node_js:
 # Install grunt-cli globally before installing all dependencies, including grunt
 before_install:
   - npm install grunt-cli -g
+  - sudo apt-add-repository "deb http://deb.opera.com/opera/ stable non-free"
+  - sudo sed -i s/deb-src.*opera.*//g /etc/apt/sources.list
+  - wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
   - sudo apt-get update -qq
   - sudo apt-get install opera -y
   - export CHROME_BIN=chromium-browser
