@@ -17,6 +17,15 @@ To create a new timer, simply call:
 $("#my-div").timer();
 ```
 This will override the content of the div with "00:00:00".
+## Available actions
+Timer instance has the following available actions:
+```
+var $t = $("#my-div").timer();
+$t.start(); // starts timer
+$t.stop(); // stops timer
+$t.zero(); // reset timer counter. If running, it keeps running
+```
+
 ## Available options
 Default option values are available calling `$.timer.defaults`.
 Here follows the list of the available options:
