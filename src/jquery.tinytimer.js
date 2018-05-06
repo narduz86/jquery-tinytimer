@@ -278,7 +278,7 @@
 		updateHtml: function() {
 
 			// using getTimezoneOffset makes this work with all timezones
-			var d = new Date( 'Thu Jan 01 1970 00:00:00');
+			var d = new Date( "Thu Jan 01 1970 00:00:00" );
 			var f = new Date( this.counter + d.getTimezoneOffset() * 60000 );
 
 			this.html(
@@ -286,8 +286,6 @@
 				( "0" + ( f.getMinutes() ) ).substr( -2 ) + ":" +
 				( "0" + ( f.getSeconds() ) ).substr( -2 )
 			);
-
-			console.log("counter: " + this.counter + " timezoneOffset: " + f.getTimezoneOffset() + " getAte: " + f.getDate() );
 		},
 
 		// event handlers
